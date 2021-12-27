@@ -8,13 +8,13 @@
 import SwiftUI
 
 //allows data to be shared across multiple views
-class User {
-    var firstName = "eliud"
-    var lastName = "kipchoge"
+class User: ObservableObject {
+    @Published var firstName = "eliud"
+    @Published var lastName = "kipchoge"
 }
 
 struct ContentView: View {
-    @State private var user = User()
+    @StateObject var user = User()
     
     var body: some View {
         VStack {
