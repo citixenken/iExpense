@@ -13,15 +13,39 @@ class User: ObservableObject {
     @Published var lastName = "kipchoge"
 }
 
-struct ContentView: View {
-    @StateObject var user = User()
+struct secondView: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
+    let name: String
     
     var body: some View {
-        VStack {
-            Text("Your name is \(user.firstName) \(user.lastName)")
-            TextField("First Name", text: $user.firstName)
-            TextField("Last Name", text: $user.lastName)
+        Text("Hello, \(name)!")
+        
+        Button("Dismiss") {
+            dismiss()
+        }
+    }
+}
 
+struct ContentView: View {
+    
+    @State private var showingSheet = false
+    //@StateObject var user = User()
+    
+    var body: some View {
+//        VStack {
+//            Text("Your name is \(user.firstName) \(user.lastName)")
+//            TextField("First Name", text: $user.firstName)
+//            TextField("Last Name", text: $user.lastName)
+//
+//        }
+        
+        Button ("Show sheet"){
+            showingSheet.toggle()
+        }
+        .sheet(isPresented: $showingSheet) {
+            secondView(name: "@citixenken")
         }
     }
 }
