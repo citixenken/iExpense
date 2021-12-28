@@ -36,6 +36,8 @@ struct ContentView: View {
     @State private var numbers = [Int]()
     @State private var currentNumber = 0
     
+    @State private var tapCount = 0
+    
     //IndexSet tells us the positions of all items in the ForEach that should be removed
     func removeRows(at offsets: IndexSet) {
         numbers.remove(atOffsets: offsets)
@@ -68,6 +70,10 @@ struct ContentView: View {
                 Button ("Increment row number") {
                     numbers.append(currentNumber)
                     currentNumber += 1
+                }
+                
+                Button("Tap count: \(tapCount)") {
+                    tapCount += 1
                 }
             }
             .toolbar {
