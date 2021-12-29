@@ -7,96 +7,37 @@
 
 import SwiftUI
 
-//allows data to be shared across multiple views
-//class User: ObservableObject {
-//    @Published var firstName = "eliud"
-//    @Published var lastName = "kipchoge"
-//}
-
-//struct secondView: View {
-//
-//    @Environment(\.dismiss) var dismiss
-//
-//    let name: String
-//
-//    var body: some View {
-//        Text("Hello, \(name)!")
-//
-//        Button("Dismiss") {
-//            dismiss()
-//        }
-//    }
-//}
-
-struct User: Codable {
-    let firstName: String
-    let lastName: String
+class Expenses: ObservableObject {
+    @Published var items = [ExpenseItem]()
 }
+
 
 struct ContentView: View {
     
-//    @State private var showingSheet = false
-    //@StateObject var user = User()
+    @StateObject var expenses = Expenses()
     
-//    @State private var numbers = [Int]()
-//    @State private var currentNumber = 0
-    
-    //@State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
-    // @AppStorage("tapCount") private var tapCount = 0
-    
-    //IndexSet tells us the positions of all items in the ForEach that should be removed
-//    func removeRows(at offsets: IndexSet) {
-//        numbers.remove(atOffsets: offsets)
-//    }
-    
-    @State private var user = User(firstName: "Mike", lastName: "Will")
+    func removeItems(at offsets: IndexSet) {
+        expenses.items.remove(atOffsets: offsets)
+    }
     
     var body: some View {
-//        VStack {
-//            Text("Your name is \(user.firstName) \(user.lastName)")
-//            TextField("First Name", text: $user.firstName)
-//            TextField("Last Name", text: $user.lastName)
-//
-//        }
-        
-//        Button ("Show sheet"){
-//            showingSheet.toggle()
-//        }
-//        .sheet(isPresented: $showingSheet) {
-//            secondView(name: "@citixenken")
-//        }
-        
         NavigationView {
-            VStack {
-//                List {
-//                    ForEach(numbers, id: \.self) {
-//                        Text("Row \($0)")
-//                    }
-//                    .onDelete(perform: removeRows)
-//                }
-//
-//                Button ("Increment row number") {
-//                    numbers.append(currentNumber)
-//                    currentNumber += 1
-//                }
-                
-//                Button("Tap count: \(tapCount)") {
-//                    tapCount += 1
-//                    //UserDefaults.standard.set(self.tapCount, forKey: "Tap")
-//                }
-                
-                //Button that archives the user and saves it to UserDefaults
-                Button("Save User") {
-                    let encoder = JSONEncoder()
+            List {
+                ForEach(expenses.items, id: \.name) { item in
+                    Text(item.name)
                     
-                    if let data = try? encoder.encode(user) {
-                        UserDefaults.standard.set(data, forKey: "UserData")
-                    }
+                }
+                .onDelete(perform: removeItems)
+            }
+            .navigationTitle("iExpense")
+            .toolbar {
+                Button {
+                    let expense = ExpenseItem(name: "Test", type: "Personal", amount: 10)
+                    expenses.items.append(expense)
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
-//            .toolbar {
-//                EditButton()
-//            }
         }
     }
 }
