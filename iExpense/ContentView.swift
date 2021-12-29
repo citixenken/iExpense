@@ -33,15 +33,16 @@ struct ContentView: View {
 //    @State private var showingSheet = false
     //@StateObject var user = User()
     
-    @State private var numbers = [Int]()
-    @State private var currentNumber = 0
+//    @State private var numbers = [Int]()
+//    @State private var currentNumber = 0
     
-    @State private var tapCount = 0
+    //@State private var tapCount = UserDefaults.standard.integer(forKey: "Tap")
+    @AppStorage("tapCount") private var tapCount = 0
     
     //IndexSet tells us the positions of all items in the ForEach that should be removed
-    func removeRows(at offsets: IndexSet) {
-        numbers.remove(atOffsets: offsets)
-    }
+//    func removeRows(at offsets: IndexSet) {
+//        numbers.remove(atOffsets: offsets)
+//    }
     
     var body: some View {
 //        VStack {
@@ -60,25 +61,26 @@ struct ContentView: View {
         
         NavigationView {
             VStack {
-                List {
-                    ForEach(numbers, id: \.self) {
-                        Text("Row \($0)")
-                    }
-                    .onDelete(perform: removeRows)
-                }
-                
-                Button ("Increment row number") {
-                    numbers.append(currentNumber)
-                    currentNumber += 1
-                }
+//                List {
+//                    ForEach(numbers, id: \.self) {
+//                        Text("Row \($0)")
+//                    }
+//                    .onDelete(perform: removeRows)
+//                }
+//
+//                Button ("Increment row number") {
+//                    numbers.append(currentNumber)
+//                    currentNumber += 1
+//                }
                 
                 Button("Tap count: \(tapCount)") {
                     tapCount += 1
+                    //UserDefaults.standard.set(self.tapCount, forKey: "Tap")
                 }
             }
-            .toolbar {
-                EditButton()
-            }
+//            .toolbar {
+//                EditButton()
+//            }
         }
     }
 }
