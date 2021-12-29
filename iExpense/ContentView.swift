@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-class Expenses: ObservableObject {
-    @Published var items = [ExpenseItem]()
-}
-
-
 struct ContentView: View {
     
     @StateObject var expenses = Expenses()
