@@ -19,6 +19,11 @@ struct AddView: View {
     //property wrapper
     @Environment(\.dismiss) var dismiss
     
+    //local currency implementation
+    var currencyFormatter: FloatingPointFormatStyle<Double>.Currency {
+        return .currency(code: Locale.current.currencyCode ?? "USD")
+    }
+    
     var body: some View {
         NavigationView {
             Form {
@@ -30,7 +35,7 @@ struct AddView: View {
                     }
                 }
                 
-                TextField("Amount", value: $amount, format: .currency(code: "USD"))
+                TextField("Amount", value: $amount, format: currencyFormatter)
                     .keyboardType(.decimalPad)
             }
             .navigationTitle("Add new expense")
